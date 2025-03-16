@@ -1,0 +1,48 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.1.0">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="472" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="NUtRc_YZKVvJq9jmLMhz-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="NUtRc_YZKVvJq9jmLMhz-49" target="HEykwpt_kWd5fQ1NsYd--0" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JyNkVaQB_59e5wj0jwlz-0" value="" style="group" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="200" width="400" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NUtRc_YZKVvJq9jmLMhz-24" value="rmd: RepositoryMetaData" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=0;fillColor=#dae8fc;strokeColor=#6c8ebf;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="JyNkVaQB_59e5wj0jwlz-0" vertex="1">
+          <mxGeometry y="10" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="NUtRc_YZKVvJq9jmLMhz-49" value="&lt;div&gt;UserDataBase()&lt;/div&gt;&lt;div&gt;(__init__)&lt;/div&gt;" style="shape=or;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="JyNkVaQB_59e5wj0jwlz-0" vertex="1">
+          <mxGeometry x="200" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="HEykwpt_kWd5fQ1NsYd--0" value="UserDataBase" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="520" y="200" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sKBlbPeneEuhtkdSylnl-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="sKBlbPeneEuhtkdSylnl-1" target="sKBlbPeneEuhtkdSylnl-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sKBlbPeneEuhtkdSylnl-2" value="username: str" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="520" y="300" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Wk7mkt4FJLN6TIB5rRup-2" value="" style="group" vertex="1" connectable="0" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="40" y="280" width="400" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sKBlbPeneEuhtkdSylnl-4" value="" style="group" parent="Wk7mkt4FJLN6TIB5rRup-2" vertex="1" connectable="0">
+          <mxGeometry width="400" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sKBlbPeneEuhtkdSylnl-0" value="UserDataBase" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="sKBlbPeneEuhtkdSylnl-4" vertex="1">
+          <mxGeometry width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sKBlbPeneEuhtkdSylnl-1" value="[uid]&lt;div&gt;(__getitem__)&lt;/div&gt;" style="shape=or;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="sKBlbPeneEuhtkdSylnl-4" vertex="1">
+          <mxGeometry x="200" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Wk7mkt4FJLN6TIB5rRup-1" value="key: str" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="Wk7mkt4FJLN6TIB5rRup-2">
+          <mxGeometry y="60" width="200" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
