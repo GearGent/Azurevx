@@ -165,15 +165,9 @@ class VersionDataBase:
         self.versions = dict()
         self.rmd = rmd
 
-    def load(self, commit: str):
-        if commit in self.versions.keys():
-            raise ValueError(f"VersionDataBase: Commit {commit} is already loaded")
-
-        self.versions[commit] = FileDataBase(self.rmd, commit)
-
     def __getitem__(self, commit: str) -> FileDataBase:
         if commit not in self.versions.keys():
-            self.load(commit)
+            self.versions[commit] = FileDataBase(self.rmd, commit)
 
         return self.versions[commit]
 
