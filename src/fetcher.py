@@ -348,9 +348,6 @@ class CommentThread:
                             didMatch = True
                     return text
 
-                if "content" not in comment.keys():
-                    print("Warning: no content in comment")
-
                 self.comments.append(Comment(comment["author"]["displayName"], comment["publishedDate"], comment["lastContentUpdatedDate"], replace_user_mentions(comment["content"], udb)))
 
     def debug(self):
