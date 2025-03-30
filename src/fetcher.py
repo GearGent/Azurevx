@@ -212,16 +212,6 @@ class ThreadContextQuote:
 
         self.file = file
 
-    def getLinesBeforeContext(self, count: int = 2) -> List[str]:
-        ret = list()
-        for i in range(max(self.startLine - count, 0), self.startLine):
-            ret.append(self.file[i])
-
-        return ret
-
-    def getCharsBeforeContext(self) -> str:
-        return self.file[self.startLine][0:self.startOff]
-
     def getContext(self) -> List[str]:
         finalContent = list()
         if self.startLine == self.endLine:
@@ -233,6 +223,16 @@ class ThreadContextQuote:
             finalContent.append(self.file[self.endLine][:self.endOff])
 
         return finalContent
+
+    def getLinesBeforeContext(self, count: int = 2) -> List[str]:
+        ret = list()
+        for i in range(max(self.startLine - count, 0), self.startLine):
+            ret.append(self.file[i])
+
+        return ret
+
+    def getCharsBeforeContext(self) -> str:
+        return self.file[self.startLine][0:self.startOff]
 
     def getLinesAfterContext(self, count: int = 2) -> List[str]:
         ret = list()
