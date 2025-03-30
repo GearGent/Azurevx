@@ -17,7 +17,7 @@ Simple class holding all data needed to create a Repository object.
 
 #### External members
 
-|Parameter   |Type         |Description                   |
+|Member      |Type         |Description                   |
 |:-----------|:------------|:-----------------------------|
 |organization|str          |Azure Devops organization name|
 |project     |str          |Azure Devops project name     |
@@ -34,7 +34,7 @@ __init__(self, organization: str, project: str, repositoryId: str, password: Opt
 
 Creates a RepositoryMetaData with provided values.
 
-|Member      |Type         |Description                   |
+|Parameter   |Type         |Description                   |
 |:-----------|:------------|:-----------------------------|
 |organization|str          |Azure Devops organization name|
 |project     |str          |Azure Devops project name     |
@@ -140,13 +140,12 @@ Creates a UserDataBase for a given organization (taken from the RepositoryMetaDa
 __getitem__(self, key: str) -> str
 ```
 
-Returns username of a given user id.
+Returns username for a given user id.
+In case of error from the request, the uid is registered as the username and a warning is printed on the CLI.
 
 |Parameter|Type|Description                     |
 |:--------|:---|:-------------------------------|
 |key      |str |Azure Devops user id            |
-
-In case of error from the request, the uid is registered as the username and a warning is printed on the CLI.
 
 ### FileDataBase
 
@@ -181,12 +180,11 @@ __getitem__(self, path: str) -> List[str]
 ```
 
 Returns the content of a given file as a list of lines.
+In case of error from the request, the file is registered as empty and a warning is printed on the CLI.
 
 |Parameter|Type|Description               |
 |:--------|:---|:-------------------------|
-|path     |str |path of the requested file|
-
-In case of error from the request, the filed is registered as empty and a warning is printed on the CLI.
+|path     |str |Path of the requested file|
 
 ### VersionDataBase
 
@@ -323,7 +321,7 @@ None
 
 ### Comment
 
-Text of a comment and various metada.
+Text of a comment and various metadata.
 
 ![Comment](drawio/Comment.svg)
 
@@ -376,6 +374,19 @@ Delimits the part of the file quoted by the comment.
 |file     |List[str]|File content, as a list of lines           |
 
 #### External methods
+
+##### ThreadContextQuote (\_\_init\_\_)
+
+```
+__init__(self, fc: DetailedFileContext, file: List[str])
+```
+
+Creates a ThreadContextQuote object from the given file context and file content.
+
+|Parameter|Type               |Description                     |
+|:--------|:------------------|:-------------------------------|
+|fc       |DetailedFileContext|File context object             |
+|file     |List[str]          |File content, as a list of lines|
 
 ##### getContext
 
