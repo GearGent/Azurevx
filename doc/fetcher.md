@@ -452,3 +452,8 @@ Some of the metadata provided by Azure devops are currently ignored. Some of the
 
 Currently, comments in a thread are all displayed at the same hierarchy level (assuming first one is the initial comment and others are responses).
 A more precise hierarchy of the comments could be provided by the script using the parentCommentId attribute of Comment objects.
+
+### Using azure-devops python API
+
+As Microsoft provides and maintains an azure-devops API as a python module, it could be relevant to use it instead of the request module.
+This project being initially started as a bash script, curl requests were translated using the request module.
