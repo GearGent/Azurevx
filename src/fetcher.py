@@ -280,7 +280,7 @@ class UserDataBase:
                 self.users[key] = j["providerDisplayName"]
             except (requests.HTTPError, IOError):
                 self.users[key] = f"<{key}>" # Keep original input but store it to avoid requesting it again
-                print(f"Warning, did not success to retrieve user {key}", file = sys.stderr)
+                print(f"Warning, did not succeed to retrieve user {key}", file = sys.stderr)
 
         return self.users[key]
 
@@ -357,7 +357,7 @@ class FileDataBase:
                 self.files[path] = r.text.splitlines()
             except (requests.HTTPError, IOError):
                 self.files[path] = ""
-                print(f"Warning, did not success to retrieve file {path} from commit {self.commit}", file = sys.stderr)
+                print(f"Warning, did not succeed to retrieve file {path} from commit {self.commit}", file = sys.stderr)
 
         return self.files[path]
 
@@ -885,6 +885,7 @@ class PullRequest:
         self.udb = udb if udb else UserDataBase(self.prmd)
 
     def get(self) -> List[CommentThread]:
+
         """
         Fetches pull request threads from server, analyses them to track version commits and returns a list of threads containing comments.
 
@@ -898,38 +899,6 @@ class PullRequest:
             HTTPError:
                 If one occurs.
         """
-        prurl = f"https://dev.azure.com/{self.prmd.organization}/{self.prmd.project}/_apis/git/repositories/{self.prmd.repositoryId}/pullRequests/{self.prmd.pullRequestId}/iterations?api-version=7.1"
-        threadsurl = f"https://dev.azure.com/{self.prmd.organization}/{self.prmd.project}/_apis/git/repositories/{self.prmd.repositoryId}/pullRequests/{self.prmd.pullRequestId}/threads?api-version=7.1"
-
-        r = requests.get(prurl, headers = self.prmd.headers)
-        r.raise_for_status()
-        if r.status_code != 200:
-            raise IOError(f"Invalid server response: {r.status_code}")
-        j = r.json()
-        if len(j["value"]) < 1:
-            return list()
-
-        commit = j["value"][0]["sourceRefCommit"]["commitId"]
-
-        r = requests.get(threadsurl, headers = self.prmd.headers)
-        r.raise_for_status()
-        if r.status_code != 200:
-            raise IOError(f"Invalid server response: {r.status_code}")
-
-        j = r.json()
-
-        thread_list = list()
-
-        for thread in j["value"]:
-
-            if "CodeReviewRefNewHeadCommit" in thread["properties"].keys():
-                commit = thread["properties"]["CodeReviewRefNewHeadCommit"]["$value"]
-
-            if thread["comments"] :
-                for comment in thread["comments"]:
-                    if comment["author"]["uniqueName"] and comment["commentType"] == "text" and ("isDeleted" not in comment.keys() or not comment["isDeleted"]):
-                        thread_list.append(CommentThread(thread, commit, self.vdb, self.udb))
-                        break
 
         return thread_list
 
