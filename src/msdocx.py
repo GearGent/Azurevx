@@ -224,9 +224,11 @@ if args.url:
     style.font.name = "Consolas"
     style.font.size = Pt(10)
     style.font.color.rgb = RGBColor(191, 191, 191)
+    style.paragraph_format.left_indent = Pt(0)
+    style.paragraph_format.right_indent = Inches(0.05)
+    style.paragraph_format.space_before = Pt(0)
     style.paragraph_format.space_after = Pt(0)
     style.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    style.paragraph_format.right_indent = Inches(0.05)
 
     # ContextData Style (context commit and file path)
     style = doc.styles.add_style("ContextData", WD_STYLE_TYPE.PARAGRAPH)
