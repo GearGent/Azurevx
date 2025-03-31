@@ -35,6 +35,7 @@ import locale
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_COLOR_INDEX, WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.shared import Pt, RGBColor, Inches
 from typing import *
 from docx.oxml import OxmlElement
@@ -65,17 +66,17 @@ if args.url:
         tbl_pr = tbl.find("{http://schemas.openxmlformats.org/wordprocessingml/2006/main}tblPr")
         tbl_pr.append(tbl_layout)
 
-    def print_quote(quote: fetcher.ThreadContextQuote, where: docx.document.Document | docx.table._Cell, suggestion: Optional[List[str]] = None, linesabove: int = 2, linesafter: int = 2):
+    def print_quote(quote: fetcher.ThreadContextQuote, where: docx.document.Document | docx.table._Cell, enabled_width: int, suggestion: Optional[List[str]] = None, linesabove: int = 2, linesafter: int = 2):
         tab = where.add_table(0, 2)
+        tab.alignment = WD_TABLE_ALIGNMENT.CENTER
         set_fixed_layout(tab)
         tab.style = "CodeTable"
         tab.autofit = False
         linenum: int = max(quote.startLine - linesabove + 1, 1)
 
         row = tab.add_row()
-        total_width = (row.cells[0].width + row.cells[1].width)
-        width_col0 = int(total_width / 100 * 10)
-        width_col1 = int(total_width / 100 * 87.5)
+        width_col0 = Inches(0.7)
+        width_col1 = enabled_width - width_col0
         tab._tbl.remove(tab.rows[0]._tr)
 
         row = None
@@ -131,23 +132,26 @@ if args.url:
             row.cells[0].width = width_col0
             row.cells[1].width = width_col1
 
-    def print_contextQuote(self, cell: docx.table._Cell, linesabove: int = 2, linesafter: int = 2):
-        print_quote(quote = self, where = cell, suggestion = None, linesabove = linesabove, linesafter = linesafter)
+    def print_contextQuote(self, cell: docx.table._Cell, enabled_width: int, linesabove: int = 2, linesafter: int = 2):
+        print_quote(quote = self, where = cell, enabled_width = enabled_width, suggestion = None, linesabove = linesabove, linesafter = linesafter)
 
-    def print_context(self, cell: docx.table._Cell):
+    def print_context(self, cell: docx.table._Cell, enabled_width: int):
         p = cell.paragraphs[-1] # Table cells have a first paragraph already
         p.style = "ContextData"
         p.add_run(f"commit: {self.commit}")
         cell.add_paragraph(f"file: {self.filePath}", style = "ContextData")
         if self.quote:
-            self.quote.print(cell)
+            self.quote.print(cell, enabled_width)
 
-    def print_comment(self, cell: docx.table._Cell, quote: fetcher.ThreadContextQuote):
-        cell.add_paragraph(f"{self.author}, {datetime.fromisoformat(self.pubDate[0:len("YYYY-MM-DDThh:mm")]).strftime("%c")}:", style = "CommentMetaData")
+    def print_comment(self, cell: docx.table._Cell, enabled_width: int, quote: fetcher.ThreadContextQuote):
+        cell.add_paragraph(f"""{self.author}, {datetime.fromisoformat(self.pubDate[0:len("YYYY-MM-DDThh:mm")]).strftime("%c")}:""", style = "CommentMetaData")
         tab = cell.add_table(1, 1)
+        tab.columns[0].width = enabled_width
+        tab.alignment = WD_TABLE_ALIGNMENT.CENTER
         set_fixed_layout(tab)
         tab.style = "Table Grid"
         comcell = tab.cell(0, 0)
+        comcell.width = enabled_width
         comcell.paragraphs[-1].style = "Tiny" # Table cells have a first paragraph already
         suggestion: Optional[List[str]] = None
         for line in self.content.splitlines():
@@ -157,7 +161,7 @@ if args.url:
                 case "```":
                     if suggestion != None:
                         comcell.add_paragraph("Suggestion:", style = "Comment")
-                        print_quote(quote = quote, where = comcell, suggestion = suggestion)
+                        print_quote(quote = quote, where = comcell, enabled_width = int(enabled_width * 0.97), suggestion = suggestion)
                         suggestion = None
                     else:
                         comcell.add_paragraph(line, style = "Comment")
@@ -171,14 +175,16 @@ if args.url:
 
     def print_thread(self, doc: Document):
         tab = doc.add_table(1, 1, style = "Table Grid")
+        tab.alignment = WD_TABLE_ALIGNMENT.CENTER
         set_fixed_layout(tab)
         cell = tab.cell(0, 0)
+        content_width = int(cell.width * 0.97)
         contextQuote = None
         if self.context:
-            self.context.print(cell)
+            self.context.print(cell, content_width)
             contextQuote = self.context.quote
         for comment in self.comments:
-            comment.print(cell, contextQuote)
+            comment.print(cell, content_width, contextQuote)
             cell.add_paragraph(style = "Tiny")
         doc.add_paragraph()
 
